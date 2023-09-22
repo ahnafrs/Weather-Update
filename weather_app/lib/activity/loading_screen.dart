@@ -1,14 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/activity/homepage.dart';
+import 'package:weather_app/worker/worker.dart';
 
-class Loading_Screen extends StatefulWidget {
-  const Loading_Screen({super.key});
+class LoadingScreen extends StatefulWidget {
+  const LoadingScreen({super.key});
 
   @override
-  State<Loading_Screen> createState() => _Loading_ScreenState();
+  State<LoadingScreen> createState() => _LoadingScreenState();
 }
 
-class _Loading_ScreenState extends State<Loading_Screen> {
+class _LoadingScreenState extends State<LoadingScreen> {
+  void startApp() async {
+    worker instance = worker(location: "Dhaka");
+    await instance.getData();
+    print(instance.air_speed);
+    print(instance.descripstion);
+    print(instance.humidity);
+  }
+
+  @override
+  void initState() {
+    startApp();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
