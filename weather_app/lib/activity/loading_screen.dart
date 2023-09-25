@@ -23,11 +23,14 @@ class _LoadingScreenState extends State<LoadingScreen> {
         context,
         '/home',
         arguments: {
-          "temp_value": weatherData!.temp.toString(),
+          "temp_value": weatherData!.temp.toStringAsFixed(2).toString(),
           "hum_value": weatherData!.humidity.toString(),
+          "presurre_value": weatherData!.presurre.toString(),
           "air_speed_value": weatherData!.airSpeed.toString(),
           "des_value": weatherData!.description,
           "main_value": weatherData!.main,
+          "feels_like_value":
+              weatherData!.feelsLike.toStringAsFixed(2).toString(),
         },
       );
     }
