@@ -1,21 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/activity/homepage.dart';
+import 'package:weather_app/worker/model.dart';
 import 'package:weather_app/worker/worker.dart';
+import 'package:weather_app/worker/worker_new.dart';
 
 class LoadingScreen extends StatefulWidget {
-  const LoadingScreen({super.key});
+  const LoadingScreen({Key? key}) : super(key: key);
 
   @override
   State<LoadingScreen> createState() => _LoadingScreenState();
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
-  void startApp() async {
-    worker instance = worker(location: "Dhaka");
-    await instance.getData();
-    print(instance.air_speed);
-    print(instance.descripstion);
-    print(instance.humidity);
+  WeatherData? weatherData;
+
+  Future<void> startApp() async {
+    final instance = Worker(location: "Dhaka");
+    weatherData = await instance.getData();
+
+    if (weatherData != null) {
+      Navigator.pushReplacementNamed(
+        context,
+        '/home',
+        arguments: {
+          "temp_value": weatherData!.temp.toString(),
+          "hum_value": weatherData!.humidity.toString(),
+          "air_speed_value": weatherData!.airSpeed.toString(),
+          "des_value": weatherData!.description,
+          "main_value": weatherData!.main,
+        },
+      );
+    }
   }
 
   @override
@@ -28,14 +43,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: TextButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => HomePage()),
-              );
-            },
-            child: Text("Go to HomePage")),
-      ),
+          child:
+              CircularProgressIndicator()), // Show a loading indicator while fetching data.
     );
   }
 }

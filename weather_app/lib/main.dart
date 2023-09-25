@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/activity/homepage.dart';
 import 'package:weather_app/activity/loading_screen.dart';
 
 void main() {
@@ -18,7 +19,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: LoadingScreen(),
+      routes: {
+        '/': (context) => LoadingScreen(),
+        '/home': (context) => HomePage(),
+      },
     );
   }
 }
