@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class WeatherData {
   final double temp;
   final int humidity;
@@ -6,6 +8,7 @@ class WeatherData {
   final String main;
   final int presurre;
   final double feelsLike;
+  final IconData icon;
 
   WeatherData({
     required this.temp,
@@ -15,6 +18,7 @@ class WeatherData {
     required this.main,
     required this.presurre,
     required this.feelsLike,
+    required this.icon,
   });
 
   factory WeatherData.fromJson(Map<String, dynamic> json) {
@@ -29,6 +33,7 @@ class WeatherData {
       main: json['weather'][0]['main'],
       presurre: json['main']['pressure'],
       feelsLike: json['main']['feels_like'].toDouble() - 273.15,
+      icon: json['weather'][0]['icon'],
     );
   }
 }

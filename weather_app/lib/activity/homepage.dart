@@ -1,8 +1,7 @@
-import 'dart:convert';
 import 'dart:math';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:weather_app/worker/model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,7 +18,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    Map info = ModalRoute.of(context)!.settings.arguments as Map;
+    WeatherData weatherData =
+        ModalRoute.of(context)!.settings.arguments as WeatherData;
+
     var city_list = [
       'Dhaka',
       'Rajshahi',
@@ -27,7 +28,8 @@ class _HomePageState extends State<HomePage> {
       'Barishal',
       'Chattogram',
       'Sylhet',
-      'Rangpur'
+      'Rangpur',
+      'Mymansingh'
     ];
     final _random = new Random();
     var city = city_list[_random.nextInt(city_list.length)];
@@ -77,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                   width: double.infinity,
                   padding: EdgeInsets.all(15),
                   child: Text(
-                    "${info['des_value']}\nin Dhaka",
+                    "${weatherData.description}\nin Dhaka",
                     style: TextStyle(
                       color: Colors.white,
                     ),
@@ -105,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            '${info['temp_value']}°',
+                            '${weatherData.temp.toStringAsFixed(2)}°',
                             style:
                                 TextStyle(color: Colors.white, fontSize: 100),
                           ),
@@ -122,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Center(
                         child: Text(
-                          'Feels Like ${info['feels_like_value']}°C',
+                          'Feels Like ${weatherData.feelsLike.toStringAsFixed(2)}°C',
                           style: TextStyle(
                             color: Colors.white,
                           ),
@@ -162,7 +164,7 @@ class _HomePageState extends State<HomePage> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      info['hum_value'],
+                                      weatherData.humidity.toString(),
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -210,7 +212,7 @@ class _HomePageState extends State<HomePage> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      info['air_speed_value'],
+                                      weatherData.airSpeed.toString(),
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -258,7 +260,7 @@ class _HomePageState extends State<HomePage> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      info['presurre_value'],
+                                      weatherData.presurre.toString(),
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
