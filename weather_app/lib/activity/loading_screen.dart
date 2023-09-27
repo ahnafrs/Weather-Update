@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:weather_app/worker/model.dart';
 import 'package:weather_app/worker/worker_new.dart';
 
@@ -39,8 +40,33 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Display a loading indicator while fetching data
-      body: Center(child: CircularProgressIndicator()),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              "images/mlogo.png",
+              height: 240,
+              width: 240,
+            ),
+            Text(
+              "Weather Hero",
+              style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            SpinKitWave(
+              color: Colors.white,
+              size: 50.0,
+            ),
+          ],
+        ),
+      ),
+      backgroundColor: const Color.fromARGB(255, 17, 18, 20),
     );
   }
 }
