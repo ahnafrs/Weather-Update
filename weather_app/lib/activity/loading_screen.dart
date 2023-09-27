@@ -14,9 +14,13 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   Future<void> startApp() async {
     final instance = Worker(location: "Dhaka");
+
+    // Fetch weather data
     weatherData = await instance.getData();
 
+    // Check if weather data is available
     if (weatherData != null) {
+      // Navigate to the home screen and pass weatherData as an argument
       Navigator.pushReplacementNamed(
         context,
         '/home',
@@ -27,13 +31,15 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   @override
   void initState() {
-    startApp();
     super.initState();
+    // Start the app initialization process when the widget is created
+    startApp();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Display a loading indicator while fetching data
       body: Center(child: CircularProgressIndicator()),
     );
   }

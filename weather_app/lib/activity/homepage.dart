@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_app/worker/model.dart';
 
@@ -18,8 +19,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    WeatherData weatherData =
-        ModalRoute.of(context)!.settings.arguments as WeatherData;
+    WeatherData? weatherData =
+        ModalRoute.of(context)!.settings.arguments as WeatherData?;
 
     var city_list = [
       'Dhaka',
@@ -33,6 +34,9 @@ class _HomePageState extends State<HomePage> {
     ];
     final _random = new Random();
     var city = city_list[_random.nextInt(city_list.length)];
+    if (kDebugMode && weatherData != null) {
+      print(weatherData.airSpeed);
+    }
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
@@ -78,11 +82,21 @@ class _HomePageState extends State<HomePage> {
                   height: 70,
                   width: double.infinity,
                   padding: EdgeInsets.all(15),
-                  child: Text(
-                    "${weatherData.description}\nin Dhaka",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
+                  child: Row(
+                    children: [
+                      Image.network(
+                        'https://openweathermap.org/img/wn/${weatherData?.icon}@2x.png',
+                        height: 50,
+                        width: 50,
+                        color: Colors.white,
+                      ),
+                      Text(
+                        "${weatherData?.description ?? 'Loading'}\nin Dhaka",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
@@ -107,7 +121,7 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            '${weatherData.temp.toStringAsFixed(2)}°',
+                            '${weatherData?.temp.toStringAsFixed(2)}°',
                             style:
                                 TextStyle(color: Colors.white, fontSize: 100),
                           ),
@@ -124,7 +138,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Center(
                         child: Text(
-                          'Feels Like ${weatherData.feelsLike.toStringAsFixed(2)}°C',
+                          'Feels Like ${weatherData?.feelsLike.toStringAsFixed(2) ?? 'Loading'}°C',
                           style: TextStyle(
                             color: Colors.white,
                           ),
@@ -164,7 +178,8 @@ class _HomePageState extends State<HomePage> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      weatherData.humidity.toString(),
+                                      weatherData?.humidity.toString() ??
+                                          'Loading',
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -212,7 +227,8 @@ class _HomePageState extends State<HomePage> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      weatherData.airSpeed.toString(),
+                                      weatherData?.airSpeed.toString() ??
+                                          'Loading',
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -260,7 +276,8 @@ class _HomePageState extends State<HomePage> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      weatherData.presurre.toString(),
+                                      weatherData?.presurre.toString() ??
+                                          'Loading',
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,

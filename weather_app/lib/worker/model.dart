@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class WeatherData {
   final double temp;
   final int humidity;
@@ -8,7 +6,7 @@ class WeatherData {
   final String main;
   final int presurre;
   final double feelsLike;
-  final IconData icon;
+  final String icon;
 
   WeatherData({
     required this.temp,
@@ -22,17 +20,14 @@ class WeatherData {
   });
 
   factory WeatherData.fromJson(Map<String, dynamic> json) {
-    //   final tempInKelvin = json['main']['temp'].toDouble();
-    // final tempInCelsius = (tempInKelvin - 273.15).toStringAsFixed(2);
-    // final temp = json['main']['temp'].toDouble() - 273.15.toStringAsFixed(2);
     return WeatherData(
-      temp: json['main']['temp'].toDouble() - 273.15,
+      temp: json['main']['temp'] - 273.15.toDouble(),
       humidity: json['main']['humidity'],
       airSpeed: json['wind']['speed'].toDouble(),
       description: json['weather'][0]['description'],
       main: json['weather'][0]['main'],
       presurre: json['main']['pressure'],
-      feelsLike: json['main']['feels_like'].toDouble() - 273.15,
+      feelsLike: json['main']['feels_like'] - 273.15.toDouble(),
       icon: json['weather'][0]['icon'],
     );
   }
